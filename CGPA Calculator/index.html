@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CGPA Calculator | Professional Academic GPA & CGPA Tracker</title>
+  <meta name="description" content="Calculate your semester GPA and overall cumulative CGPA with precision using the standard 4.0 scale. Clean, responsive, and easy to use.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-title">CGPA Calculator</h1>
+          <p class="brand-subtitle">Standard 4.0 Academic Grading Scale</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="guideModalBtn" class="btn btn-secondary btn-sm" aria-label="Open Grading Scale Guide" title="Grading scale reference">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          <span class="btn-text">Scale Guide</span>
+        </button>
+
+        <button id="themeToggleBtn" class="btn btn-icon theme-toggle" aria-label="Toggle light and dark mode" title="Toggle theme">
+          <!-- Sun Icon (shown in dark mode) -->
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <!-- Moon Icon (shown in light mode) -->
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="main-content">
+    <div class="content-container">
+
+      <!-- How it Works Brief Note -->
+      <section class="info-banner" aria-label="How it works">
+        <div class="info-banner-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+        </div>
+        <div class="info-banner-text">
+          <strong>How it works:</strong> Select your current semester. For Semesters 2–8, enter your previous cumulative CGPA and total credit hours earned. Pick the number of courses this semester, enter your course names, credit hours, and expected grades, then click <strong>Calculate CGPA</strong>.
+        </div>
+      </section>
+
+      <!-- Form Card 1: Semester & Previous Record -->
+      <section class="card" aria-labelledby="academic-record-heading">
+        <div class="card-header">
+          <div class="card-step-badge">1</div>
+          <div>
+            <h2 id="academic-record-heading" class="card-title">Semester & Prior Academic Record</h2>
+            <p class="card-subtitle">Select your semester and provide previous cumulative academic history if applicable.</p>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="form-grid">
+            <!-- Semester Selection -->
+            <div class="form-group">
+              <label for="semesterSelect" class="form-label">
+                Current Semester <span class="required-star">*</span>
+              </label>
+              <div class="select-wrapper">
+                <select id="semesterSelect" class="form-control" aria-describedby="semesterHelp">
+                  <option value="1">Semester 1 (Freshman / Initial)</option>
+                  <option value="2">Semester 2</option>
+                  <option value="3">Semester 3</option>
+                  <option value="4">Semester 4</option>
+                  <option value="5">Semester 5</option>
+                  <option value="6">Semester 6</option>
+                  <option value="7">Semester 7</option>
+                  <option value="8">Semester 8 (Senior / Final)</option>
+                </select>
+              </div>
+              <small id="semesterHelp" class="form-hint">Semester 1 calculates your initial GPA/CGPA with no prior record required.</small>
+            </div>
+
+            <!-- Previous CGPA -->
+            <div class="form-group" id="prevCgpaGroup">
+              <label for="prevCgpa" class="form-label">
+                Previous Cumulative CGPA <span class="required-star" id="prevCgpaStar">*</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  type="number" 
+                  id="prevCgpa" 
+                  class="form-control" 
+                  min="0.00" 
+                  max="4.00" 
+                  step="0.01" 
+                  placeholder="e.g. 3.45"
+                  aria-describedby="prevCgpaHint"
+                >
+                <span class="input-suffix">/ 4.00</span>
+              </div>
+              <small id="prevCgpaHint" class="form-hint">Enter your previous cumulative CGPA (0.00 – 4.00).</small>
+              <div class="field-error-msg" id="prevCgpaError" role="alert" aria-live="polite"></div>
+            </div>
+
+            <!-- Total Credit Hours Completed So Far -->
+            <div class="form-group" id="prevCreditsGroup">
+              <label for="prevCredits" class="form-label">
+                Prior Credit Hours Completed <span class="required-star" id="prevCreditsStar">*</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  type="number" 
+                  id="prevCredits" 
+                  class="form-control" 
+                  min="1" 
+                  max="250" 
+                  step="1" 
+                  placeholder="e.g. 48"
+                  aria-describedby="prevCreditsHint"
+                >
+                <span class="input-suffix">credits</span>
+              </div>
+              <small id="prevCreditsHint" class="form-hint">Total credit hours completed prior to this semester.</small>
+              <div class="field-error-msg" id="prevCreditsError" role="alert" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <!-- Dynamic Semester 1 Notice -->
+          <div id="sem1Notice" class="notice-pill" role="status">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span><strong>Semester 1 selected:</strong> Previous record fields are not applicable and automatically disabled.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Form Card 2: Current Semester Courses -->
+      <section class="card" aria-labelledby="courses-heading">
+        <div class="card-header flex-between flex-wrap">
+          <div class="flex-row items-center gap-md">
+            <div class="card-step-badge">2</div>
+            <div>
+              <h2 id="courses-heading" class="card-title">Current Semester Courses</h2>
+              <p class="card-subtitle">Choose the number of subjects and provide details for each course.</p>
+            </div>
+          </div>
+
+          <!-- Subject Count Selector -->
+          <div class="subject-count-control">
+            <label for="subjectCount" class="subject-count-label">
+              Number of Subjects:
+            </label>
+            <div class="select-wrapper count-select-wrapper">
+              <select id="subjectCount" class="form-control count-select" aria-label="Choose number of subjects to calculate (1 to 10)">
+                <option value="1">1 Subject</option>
+                <option value="2">2 Subjects</option>
+                <option value="3">3 Subjects</option>
+                <option value="4">4 Subjects</option>
+                <option value="5" selected>5 Subjects</option>
+                <option value="6">6 Subjects</option>
+                <option value="7">7 Subjects</option>
+                <option value="8">8 Subjects</option>
+                <option value="9">9 Subjects</option>
+                <option value="10">10 Subjects</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <!-- Course Rows Column Header (Desktop / Tablet) -->
+          <div class="courses-header-row" aria-hidden="true">
+            <span class="col-num">#</span>
+            <span class="col-name">Course Name / Code <span class="required-star">*</span></span>
+            <span class="col-credits">Credit Hours <span class="required-star">*</span></span>
+            <span class="col-grade">Expected Grade <span class="required-star">*</span></span>
+          </div>
+
+          <!-- Courses Container (Dynamic) -->
+          <div id="coursesList" class="courses-list" role="region" aria-label="Course list rows">
+            <!-- Dynamic rows will be inserted here by script.js -->
+          </div>
+
+          <!-- Global Validation Alert Banner -->
+          <div id="validationBanner" class="alert-banner alert-danger hidden" role="alert" aria-live="assertive">
+            <div class="alert-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+            </div>
+            <div class="alert-content">
+              <strong id="validationTitle" class="alert-title">Incomplete Information</strong>
+              <p id="validationText" class="alert-message">Please complete all subjects and required fields to continue.</p>
+            </div>
+          </div>
+
+          <!-- Action Buttons Bar -->
+          <div class="form-actions">
+            <button type="button" id="calculateBtn" class="btn btn-primary btn-lg">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="4" y="2" width="16" height="20" rx="2"/>
+                <line x1="8" y1="6" x2="16" y2="6"/>
+                <line x1="16" y1="14" x2="16" y2="18"/>
+                <path d="M16 10h.01"/>
+                <path d="M12 10h.01"/>
+                <path d="M8 10h.01"/>
+                <path d="M12 14h.01"/>
+                <path d="M8 14h.01"/>
+                <path d="M12 18h.01"/>
+                <path d="M8 18h.01"/>
+              </svg>
+              <span>Calculate CGPA</span>
+            </button>
+
+            <button type="button" id="resetBtn" class="btn btn-outline btn-lg">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+              <span>Reset All</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Results Section (Revealed on Calculation) -->
+      <section id="resultsSection" class="card results-card hidden" aria-labelledby="results-heading">
+        <div class="card-header results-header">
+          <div class="flex-row items-center gap-md">
+            <div class="card-step-badge badge-success">✓</div>
+            <div>
+              <h2 id="results-heading" class="card-title">Academic Performance Summary</h2>
+              <p class="card-subtitle" id="resultsSubtitle">Calculation successfully generated based on official 4.0 scale.</p>
+            </div>
+          </div>
+
+          <!-- Print / Copy Action Buttons -->
+          <div class="results-quick-actions">
+            <button type="button" id="copyResultBtn" class="btn btn-secondary btn-sm" title="Copy results summary to clipboard">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span id="copyBtnText">Copy Summary</span>
+            </button>
+            <button type="button" id="printResultBtn" class="btn btn-secondary btn-sm" title="Print or save as PDF">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="6 9 6 2 18 2 18 9"/>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                <rect x="6" y="14" width="12" height="8"/>
+              </svg>
+              <span>Print</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <!-- Academic Standing Status Banner -->
+          <div id="academicStandingBanner" class="standing-banner">
+            <div class="standing-indicator" aria-hidden="true"></div>
+            <div class="standing-details">
+              <span class="standing-label">Academic Standing</span>
+              <h3 id="standingTitle" class="standing-title">Outstanding Academic Standing</h3>
+              <p id="standingDescription" class="standing-desc">Excellent work! You are maintaining an honors-level cumulative GPA.</p>
+            </div>
+          </div>
+
+          <!-- Metric Cards Grid -->
+          <div class="metrics-grid">
+            <!-- Semester GPA Card -->
+            <div class="metric-card">
+              <div class="metric-card-top">
+                <span class="metric-label">Semester GPA</span>
+                <span class="metric-scale">4.00 max</span>
+              </div>
+              <div class="metric-value-wrapper">
+                <span id="displaySemGpa" class="metric-value">0.00</span>
+              </div>
+              <div class="metric-subtext" id="semGpaQualityPoints">
+                Earned <strong id="semPointsEarned">0.00</strong> quality points
+              </div>
+            </div>
+
+            <!-- Overall Cumulative CGPA Card -->
+            <div class="metric-card metric-card-highlight">
+              <div class="metric-card-top">
+                <span class="metric-label">Updated Cumulative CGPA</span>
+                <span class="metric-badge">Overall</span>
+              </div>
+              <div class="metric-value-wrapper">
+                <span id="displayCgpa" class="metric-value highlight-value">0.00</span>
+              </div>
+              <div class="metric-subtext" id="cgpaSubtext">
+                Cumulative across all completed semesters
+              </div>
+            </div>
+
+            <!-- Total Credit Hours Card -->
+            <div class="metric-card">
+              <div class="metric-card-top">
+                <span class="metric-label">Total Credit Hours</span>
+                <span class="metric-scale">Completed</span>
+              </div>
+              <div class="metric-value-wrapper">
+                <span id="displayTotalCredits" class="metric-value">0</span>
+                <span class="metric-unit">hrs</span>
+              </div>
+              <div class="metric-subtext" id="creditBreakdownText">
+                0 Prior + 0 Current Semester
+              </div>
+            </div>
+          </div>
+
+          <!-- Course Breakdown Table -->
+          <div class="breakdown-wrapper">
+            <h4 class="breakdown-heading">Semester Course Grade Breakdown</h4>
+            <div class="table-responsive">
+              <table class="breakdown-table" aria-label="Course breakdown table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Course Name</th>
+                    <th scope="col" class="text-center">Credits</th>
+                    <th scope="col" class="text-center">Grade</th>
+                    <th scope="col" class="text-right">Grade Point</th>
+                    <th scope="col" class="text-right">Quality Points</th>
+                  </tr>
+                </thead>
+                <tbody id="breakdownTableBody">
+                  <!-- Injected via script.js -->
+                </tbody>
+                <tfoot>
+                  <tr class="table-total-row">
+                    <td colspan="2"><strong>Semester Total</strong></td>
+                    <td class="text-center"><strong id="tableTotalCredits">0</strong></td>
+                    <td class="text-center">—</td>
+                    <td class="text-right">GPA: <strong id="tableGpa">0.00</strong></td>
+                    <td class="text-right"><strong id="tableTotalQualityPoints">0.00</strong></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Grading Scale Reference Modal / Guide -->
+  <div id="guideModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalTitle" class="modal-title">Standard 4.0 Grading Scale & Formula</h3>
+        <button type="button" id="closeModalBtn" class="btn btn-icon modal-close" aria-label="Close guide modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-intro">
+          This calculator uses the standard 4.00 university grading scale adopted internationally.
+        </p>
+
+        <!-- Scale Table -->
+        <div class="table-responsive">
+          <table class="guide-table">
+            <thead>
+              <tr>
+                <th>Letter Grade</th>
+                <th>Grade Point Value</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>A</strong></td><td>4.00</td><td>Outstanding / Excellent</td></tr>
+              <tr><td><strong>A-</strong></td><td>3.67</td><td>Very Good</td></tr>
+              <tr><td><strong>B+</strong></td><td>3.33</td><td>Good / High Honors</td></tr>
+              <tr><td><strong>B</strong></td><td>3.00</td><td>Above Average</td></tr>
+              <tr><td><strong>B-</strong></td><td>2.67</td><td>Average</td></tr>
+              <tr><td><strong>C+</strong></td><td>2.33</td><td>Satisfactory</td></tr>
+              <tr><td><strong>C</strong></td><td>2.00</td><td>Passing (Core Minimum)</td></tr>
+              <tr><td><strong>C-</strong></td><td>1.67</td><td>Conditional Pass</td></tr>
+              <tr><td><strong>D+</strong></td><td>1.33</td><td>Marginal Pass</td></tr>
+              <tr><td><strong>D</strong></td><td>1.00</td><td>Bare Minimum Pass</td></tr>
+              <tr><td><strong>F</strong></td><td>0.00</td><td>Fail (0.00 Points)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Formulas -->
+        <div class="formula-box">
+          <h4 class="formula-title">Official Formulas Used:</h4>
+          <div class="formula-item">
+            <span class="formula-name">Quality Points:</span>
+            <code>Quality Points = Credit Hours × Grade Point</code>
+          </div>
+          <div class="formula-item">
+            <span class="formula-name">Semester GPA:</span>
+            <code>Semester GPA = Total Semester Quality Points ÷ Total Semester Credits</code>
+          </div>
+          <div class="formula-item">
+            <span class="formula-name">Overall CGPA:</span>
+            <code>CGPA = (Prior Quality Points + Semester Quality Points) ÷ Total Cumulative Credits</code>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="closeModalBottomBtn" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast Container -->
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <p><strong>CGPA Calculator</strong> • Designed for university & college academic tracking.</p>
+        <p class="footer-meta">Auto-saves your course data locally in your browser so you won't lose progress.</p>
+      </div>
+      <div class="footer-right">
+        <span class="status-indicator">
+          <span class="status-dot"></span> Local Storage Active
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
